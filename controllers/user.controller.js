@@ -28,6 +28,9 @@ exports.findAll = async (req, res) => {
             if (err) {
                 return res.status(500).send({message: "Error during creation of user", user: null})
             }
+            if (!users.length > 0) {
+                return res.status(404).send({message: "Not found", user: null})
+            }
             return res.status(200).send({message: "Found"}, users)
         })
     } catch (error) {
