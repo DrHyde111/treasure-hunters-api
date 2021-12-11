@@ -78,13 +78,3 @@ exports.deleteById = async (req, res) => {
         return res.status(500).send({message: "Something went wrong."})
     }
 };
-
-// Delete all Users from the database.
-exports.deleteAll = (req, res) => {
-    try {
-
-    } catch (error) {
-        return res.status(500).send({message: "Something went wrong."})
-    }
-};
-
