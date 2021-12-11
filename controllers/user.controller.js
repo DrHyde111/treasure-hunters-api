@@ -22,9 +22,14 @@ exports.create = async (req, res) => {
 };
 
 // Retrieve all Users from the database.
-exports.findAll = (req, res) => {
+exports.findAll = async (req, res) => {
     try {
-
+        await User.find({}, function (err, users) {
+            if (err) {
+                return res.status(500).send({message: "Error during creation of user", user: null})
+            }
+            return res.status(200).send({message: "Found"}, users)
+        })
     } catch (error) {
         return res.status(500).send({message: "Something went wrong."})
     }
