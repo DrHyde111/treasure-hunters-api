@@ -1,16 +1,19 @@
 const db = require("../models")
 const User = db.user
 
-// Create and Save a new Tutorial
+// Create and Save a new User
 exports.create = (req, res) => {
     try{
+        const User = new User({
+            email: req.body.email
 
+        })
     }catch (error){
         return res.status(500).send({message: "Something went wrong."})
     }
 };
 
-// Retrieve all Tutorials from the database.
+// Retrieve all Users from the database.
 exports.findAll = (req, res) => {
     try{
 
