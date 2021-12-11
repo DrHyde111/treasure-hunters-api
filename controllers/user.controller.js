@@ -65,8 +65,14 @@ exports.update = (req, res) => {
 };
 
 // Delete a User with the specified id in the request
-exports.delete = (req, res) => {
+exports.deleteById = async (req, res) => {
     try {
+        await User.deleteOne({_id: req.params.id}, function (err) {
+            if (err) {
+                return res.status(500).send({message: "User deletion failed"})
+            }
+            return res.status(200).send({message: "User was deleted"})
+        })
 
     } catch (error) {
         return res.status(500).send({message: "Something went wrong."})
