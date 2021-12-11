@@ -14,6 +14,7 @@ app.use(express.urlencoded({extended: true}));
 
 db.initConnection()
 
+require("./app/routes/tutorial.routes")(app);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
