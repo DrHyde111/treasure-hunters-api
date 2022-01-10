@@ -38,15 +38,8 @@ exports.findAll = async (req, res) => {
 // Find a single User with an id
 exports.findOneById = async (req, res) => {
     try {
-        await User.findOne({_id: req.id}, function (err, user) {
-            if (err) {
-                return res.status(500).send({message: "Error during creation of user", user: null})
-            }
-            if (!user) {
-                return res.status(404).send({message: "User not found", user: null})
-            }
-            return res.status(200).send({message: "Found", user: user})
-        })
+        let user = await User.findOne({_id: req.params.id})
+        return res.status(200).send({message: "Found", user: user})
     } catch (error) {
         return res.status(500).send({message: "Something went wrong."})
     }
