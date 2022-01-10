@@ -1,14 +1,17 @@
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
 
-exports.cryptPassword = function (password) {
-    bcrypt.hash(password, saltRounds, function (err, hash) {
-        return err == null ? Promise.resolve(hash) : Promise.reject(err)
-    });
+exports.cryptPassword = async function (password) {
+    try {
+        return await bcrypt.hash(password, 10);
+    }catch (error){
+        throw error
+    }
 }
 
-exports.comparePassword = function (plainPass, hashword) {
-    bcrypt.compare(plainPass, hashword, function (err, isPasswordMatch) {
-        return err == null ? Promise.resolve(isPasswordMatch) : Promise.resolve(err)
-    });
+exports.comparePassword = async function (plainPass, hashword) {
+    try {
+        return await bcrypt.compare(plainPass, hashword)
+    } catch (error) {
+        throw error
+    }
 };

@@ -1,12 +1,14 @@
 const db = require("../models")
 const User = db.user
+const bcrypt = require("../services/encryption.service")
 
 // Create and Save a new User
 exports.create = async (req, res) => {
     try {
+        let password = await bcrypt.cryptPassword(req.body.password)
         const user = new User({
             email: req.body.email,
-            password: req.body.password,
+            password: password,
             name: req.body.name,
             role: req.body.role
         })
