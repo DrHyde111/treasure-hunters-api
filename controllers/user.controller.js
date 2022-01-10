@@ -48,16 +48,8 @@ exports.findOneById = async (req, res) => {
 // Update a User by the id in the request
 exports.update = async (req, res) => {
     try {
-        await User.findByIdAndUpdate({_id: req.params.id}, req.body.user, function (err, user) {
-            if (err) {
-                return res.status(500).send({message: "Error during updation of user", user: null})
-            }
-            if (!user) {
-                return res.status(404).send({message: "User not found", user: null})
-            }
-            return res.status(200).send({message: "User updated", user: user})
-        })
-
+        let user = await User.findByIdAndUpdate({_id: req.params.id}, req.body);
+        return res.status(200).send({message: "User updated", user: user})
     } catch (error) {
         return res.status(500).send({message: "Something went wrong."})
     }
@@ -72,6 +64,17 @@ exports.deleteById = async (req, res) => {
             }
             return res.status(200).send({message: "User was deleted"})
         })
+
+    } catch (error) {
+        return res.status(500).send({message: "Something went wrong."})
+    }
+};
+
+// Delete all users
+exports.deleteAll= async (req, res) => {
+    try {
+        let result = await User.remove({})
+        return res.status(200).send({message: "Users were deleted"})
 
     } catch (error) {
         return res.status(500).send({message: "Something went wrong."})

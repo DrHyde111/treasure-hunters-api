@@ -1,3 +1,4 @@
+const user = require("../controllers/user.controller");
 module.exports = app => {
     const user = require("../controllers/user.controller");
 
@@ -17,6 +18,9 @@ module.exports = app => {
 
     // Delete a User with id
     router.delete("/:id", user.deleteById);
+
+    // Delete all Users
+    router.delete("/:id", user.deleteAll);
 
     app.use('/api/user', router);
 };
