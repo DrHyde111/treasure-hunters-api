@@ -1,5 +1,5 @@
 module.exports = app => {
-    const user = require("../controllers/game.controller");
+    const game = require("../controllers/game.controller");
 
     let router = require("express").Router();
 
