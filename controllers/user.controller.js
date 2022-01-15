@@ -58,12 +58,8 @@ exports.update = async (req, res) => {
 // Delete a User with the specified id in the request
 exports.deleteById = async (req, res) => {
     try {
-        await User.deleteOne({_id: req.params.id}, function (err) {
-            if (err) {
-                return res.status(500).send({message: "User deletion failed"})
-            }
-            return res.status(200).send({message: "User was deleted"})
-        })
+        let result = await User.deleteOne({_id: req.params.id});
+        return res.status(200).send({message: "User was deleted"})
 
     } catch (error) {
         return res.status(500).send({message: "Something went wrong."})
@@ -71,7 +67,7 @@ exports.deleteById = async (req, res) => {
 };
 
 // Delete all users
-exports.deleteAll= async (req, res) => {
+exports.deleteAll = async (req, res) => {
     try {
         let result = await User.remove({})
         return res.status(200).send({message: "Users were deleted"})
