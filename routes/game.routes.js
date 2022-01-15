@@ -1,5 +1,6 @@
 module.exports = app => {
     const game = require("../controllers/game.controller");
+    const point = require("../controllers/point.controller")
 
     let router = require("express").Router();
 
@@ -20,6 +21,9 @@ module.exports = app => {
 
     // Delete all Games
     router.delete("/", game.deleteAll);
+
+    // Add point to the game
+    router.post("/:id/addPoint", point.create);
 
     app.use('/api/game', router);
 };

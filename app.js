@@ -15,6 +15,7 @@ app.use(express.urlencoded({extended: true}));
 db.initConnection()
 
 require("./routes/user.routes")(app);
+require("./routes/game.routes")(app);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);

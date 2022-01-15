@@ -2,6 +2,8 @@ const dbConfig = require("../config/db.config.js");
 
 const UserSchema = require("./user.model")
 const GameSchema = require("./game.model")
+const PointSchema = require("./point.model")
+
 
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
@@ -12,6 +14,7 @@ db.url = dbConfig.connectionString;
 
 db.user = mongoose.model("user", UserSchema);
 db.game = mongoose.model("game", GameSchema)
+db.point = mongoose.model("point", PointSchema)
 
 db.initConnection = async () => {
     try {

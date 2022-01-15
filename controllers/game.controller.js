@@ -6,7 +6,7 @@ exports.create = async (req, res) => {
     try {
         const game = new Game({
             description: req.body.description,
-            creator: req.body.name,
+            creator: req.body.creator,
         })
         await Game.create(game, function (err, game) {
             if (err) {
