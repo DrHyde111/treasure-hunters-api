@@ -16,6 +16,8 @@ db.initConnection()
 
 require("./routes/user.routes")(app);
 require("./routes/game.routes")(app);
+require("./routes/auth.routes")(app);
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
