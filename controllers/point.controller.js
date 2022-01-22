@@ -6,7 +6,6 @@ const Game = db.game
 exports.create = async (req, res) => {
     try {
         const game = await Game.findOne({_id: req.params.id})
-        console.log(game)
         if (!game) {
             return res.status(404).send({message: "Game doesnt exist!"})
         }
@@ -14,10 +13,10 @@ exports.create = async (req, res) => {
             longitude: req.body.longitude,
             latitude: req.body.latitude,
             index: req.body.index,
+            question: req.body.question,
+            correctAnswer: req.body.correctAnswer
         })
-        console.log(point)
         game.points.push(point);
-        console.log(game)
         const result = await game.save();
         console.log(result)
         return res.status(200).send({message: "Point was added"})
@@ -58,6 +57,9 @@ exports.update = async (req, res) => {
     try {
         let game = await Game.findOne({_id: req.params.id});
         let point = await game.points.id(req.params.pointId);
+        if(!point){
+            return res.status(404).send({message: "Point doesnt exist"})
+        }
         await point.set(req.body);
         await game.save()
         return res.status(200).send({message: "Game updated", point: point})

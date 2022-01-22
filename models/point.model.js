@@ -1,11 +1,12 @@
 const mongoose = require("mongoose");
-const ChallengeSchema = require("./challenge.model");
 const PointSchema = new mongoose.Schema(
     {
         longitude: String,
         latitude: String,
-        challenge: ChallengeSchema,
-        index: Number
+        index: Number,
+        question: String,
+        correctAnswer: String,
+        answers: [String],
     },
     {timestamps: true}
 )
