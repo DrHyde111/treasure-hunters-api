@@ -12,7 +12,7 @@ exports.login = async (req, res) => {
         if (!result) {
             return res.status(400).send({message: "Invalid credentials"})
         }
-        return res.status(400).send({message: "Login successfull", user: user})
+        return res.status(200).send({message: "Login successfull", user: user})
     } catch (error) {
         return res.status(500).send({message: "Something went wrong."})
     }
