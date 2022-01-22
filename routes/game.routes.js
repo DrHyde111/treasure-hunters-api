@@ -1,3 +1,4 @@
+const point = require("../controllers/point.controller");
 module.exports = app => {
     const game = require("../controllers/game.controller");
     const point = require("../controllers/point.controller")
@@ -23,7 +24,23 @@ module.exports = app => {
     router.delete("/", game.deleteAll);
 
     // Add point to the game
-    router.post("/:id/addPoint", point.create);
+    router.post("/:id/points/", point.create);
+
+    // Get all points for the game
+    router.get("/:id/points/", point.findAll);
+
+    // Find point by id
+    router.get("/:id/points/:pointId", point.findOneById);
+
+    // Update point by id and game id
+    router.post("/:id/points/:pointId", point.update);
+
+    // Delete point
+    router.delete("/:id/points/:pointId", point.deleteById);
+
+    // Deleta all point belonging to specific game
+    router.delete("/:id/points/", point.deleteAll);
+
 
     app.use('/api/game', router);
 };

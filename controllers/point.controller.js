@@ -26,11 +26,15 @@ exports.create = async (req, res) => {
     }
 };
 
-// Retrieve all Users from the database.
+// Retrieve all Points from the specific game.
 exports.findAll = async (req, res) => {
     try {
-        let users = await User.find({});
-        return res.status(200).send({message: "Found", users})
+        let game = await Game.findOne({_id: req.params.id});
+        if (!game) {
+            return res.status(404).send({message: "Game doesnt exist!"})
+        }
+
+        return res.status(200).send({message: "Found", points: game.points})
 
     } catch (error) {
         console.log(error)
@@ -38,42 +42,51 @@ exports.findAll = async (req, res) => {
     }
 };
 
-// Find a single User with an id
+// Find a single Point with an id and game id
 exports.findOneById = async (req, res) => {
     try {
-        let user = await User.findOne({_id: req.params.id})
-        return res.status(200).send({message: "Found", user: user})
+        let game = await Game.findOne({_id: req.params.id});
+        let point = await game.points.id(req.params.pointId)
+        return res.status(200).send({message: "Found", point: point})
     } catch (error) {
         return res.status(500).send({message: "Something went wrong."})
     }
 };
 
-// Update a User by the id in the request
+// Update a Point by the id in the request
 exports.update = async (req, res) => {
     try {
-        let user = await User.findByIdAndUpdate({_id: req.params.id}, req.body);
-        return res.status(200).send({message: "User updated", user: user})
+        let game = await Game.findOne({_id: req.params.id});
+        let point = await game.points.id(req.params.pointId);
+        await point.set(req.body);
+        await game.save()
+        return res.status(200).send({message: "Game updated", point: point})
     } catch (error) {
+        console.log(error)
         return res.status(500).send({message: "Something went wrong."})
     }
 };
 
-// Delete a User with the specified id in the request
+// Delete a Point with the specified id in the request
 exports.deleteById = async (req, res) => {
     try {
-        let result = await User.deleteOne({_id: req.params.id});
-        return res.status(200).send({message: "User was deleted"})
-
+        let game = await Game.findOne({_id: req.params.id});
+        let point = await game.points.id(req.params.pointId).remove();
+        await game.save()
+        return res.status(200).send({message: "Game updated", point: point})
     } catch (error) {
+        console.log(error)
         return res.status(500).send({message: "Something went wrong."})
     }
 };
 
-// Delete all users
+// Delete all points for given game id
 exports.deleteAll = async (req, res) => {
     try {
-        let result = await User.remove({})
-        return res.status(200).send({message: "Users were deleted"})
+        let game = await Game.findOne({_id: req.params.id});
+        game.points = [];
+        await game.save()
+        return res.status(200).send({message: "All points were deleted"})
 
     } catch (error) {
         return res.status(500).send({message: "Something went wrong."})
