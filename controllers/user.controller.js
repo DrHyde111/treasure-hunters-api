@@ -5,8 +5,12 @@ const bcrypt = require("../services/encryption.service")
 // Create and Save a new User
 exports.create = async (req, res) => {
     try {
+        let user = await User.findOne({email: req.body.email});
+        if (user) {
+            return res.status(403).send({message: "User already exist", user: null})
+        }
         let password = await bcrypt.cryptPassword(req.body.password)
-        const user = new User({
+        user = new User({
             email: req.body.email,
             password: password,
             name: req.body.name,
