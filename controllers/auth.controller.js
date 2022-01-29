@@ -1,6 +1,8 @@
 const db = require("../models")
 const User = db.user
 const bcrypt = require("../services/encryption.service")
+const jwt = require('jsonwebtoken')
+const config = require('/config/global.config')
 
 exports.login = async (req, res) => {
     try {
@@ -12,7 +14,9 @@ exports.login = async (req, res) => {
         if (!result) {
             return res.status(400).send({message: "Invalid credentials"})
         }
-        return res.status(200).send({message: "Login successfull", user: user})
+        let token = await jwt.sign({...user}, config.jswSecret, {expiresIn: 86400})
+
+        return res.status(200).send({message: "Login successfull", user: user, token: token})
     } catch (error) {
         return res.status(500).send({message: "Something went wrong."})
     }
