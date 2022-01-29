@@ -2,7 +2,7 @@ const db = require("../models")
 const User = db.user
 const bcrypt = require("../services/encryption.service")
 const jwt = require('jsonwebtoken')
-const config = require('/config/global.config')
+const config = require('../config/global.config.js')
 
 exports.login = async (req, res) => {
     try {
