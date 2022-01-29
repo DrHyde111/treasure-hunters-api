@@ -5,6 +5,7 @@ const Game = db.game
 exports.create = async (req, res) => {
     try {
         const game = new Game({
+            title: req.body.title,
             description: req.body.description,
             creator: req.body.creator,
         })
