@@ -11,7 +11,7 @@ exports.create = async (req, res) => {
         }
         let point = new Point({
             longitude: req.body.longitude,
-            latitude: req.body.latitude,
+            latitiude: req.body.latitiude,
             index: req.body.index,
             question: req.body.question,
             correctAnswer: req.body.correctAnswer
