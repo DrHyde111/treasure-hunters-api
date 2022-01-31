@@ -11,9 +11,10 @@ exports.create = async (req, res) => {
         }
         let point = new Point({
             longitude: req.body.longitude,
-            latitiude: req.body.latitiude,
+            latitude: req.body.latitude,
             index: req.body.index,
             question: req.body.question,
+            answers: req.body.answers,
             correctAnswer: req.body.correctAnswer
         })
         game.points.push(point);
@@ -57,7 +58,7 @@ exports.update = async (req, res) => {
     try {
         let game = await Game.findOne({_id: req.params.id});
         let point = await game.points.id(req.params.pointId);
-        if(!point){
+        if (!point) {
             return res.status(404).send({message: "Point doesnt exist"})
         }
         await point.set(req.body);
